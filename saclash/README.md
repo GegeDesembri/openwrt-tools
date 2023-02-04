@@ -24,12 +24,12 @@ Semoga membantu.
     Target Platform: bcm27xx/bcm2711
     Firmware Version: OpenWrt 22.03.3 r20028-43d71ad93e / LuCI openwrt-22.03 branch git-22.361.69894-438c598
     Kernel Version: 5.10.161
-    
+
     Device name: E5577CS-603
     Hardware version: CL3E5573SM06
     Software version: 21.333.01.00.00
     Web UI version:	17.100.18.03.143-Mod1.21
-    
+
     Nama perangkat:	E8372
     Versi perangkat keras: CL1E8372HM
     Versi perangkat lunak: 21.333.64.00.1456
