@@ -47,7 +47,7 @@ Semoga membantu.
 ### 1. Prepare
 
 - Disable OpenClash
-- Uncheck `Use default gateway` pada setiap hilink interface [*Interfaces* > *HILINK* > *Edit* > *Adavanced Settings* > *uncheck `Use default gateway`* > *Save*]
+- Uncheck `Use default gateway` pada setiap hilink interface [*Interfaces* > *HILINK* > *Edit* > *Advanced Settings* > *uncheck `Use default gateway`* > *Save*]
 
 ### 2. Install Prerequisite
 
