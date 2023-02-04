@@ -1,0 +1,94 @@
+#!/bin/bash /etc/rc.common
+
+START=19
+STOP=50
+
+dir_root="/etc/gegevps/saclash"
+name_config="config.yaml"
+clash_core="clash"
+boot_delay="60"
+watchdog_delay="1"
+mkdir -p ${dir_root}
+
+function check_gw(){
+    ping -q -w 1 -c 1 $1 > /dev/null && echo ok || echo error
+}
+
+function saclash_watchdog(){
+    while true; do
+        cat ${dir_root}/${name_config} | yq -r '.proxies[] | [.server, .gateway] | @csv' | while read route_obj; do
+            ipserver="$(echo -e "${route_obj}" | cut -d ',' -f 1)"
+            gateway="$(echo -e "${route_obj}" | cut -d ',' -f 2)"
+            
+            if [[ $(ip route | grep -we "${ipserver}" | sed "/127\.0\.0\.1/d" | wc -l) -eq 0 ]]; then
+                if [[ "$(ping -q -w 1 -c 1 ${gateway} > /dev/null && echo ok || echo error)" == "ok" ]]; then
+                    echo -e " Route ${ipserver} to ${gateway}"
+                    route del ${ipserver} gw 127.0.0.1 &>/dev/null
+                    route add ${ipserver} gw ${gateway} &>/dev/null
+                else
+                    # Note : Route loopback gak bisa karena ping checknya selalu ok ketika Clash sedangberjalan
+                    echo -e " Route ${ipserver} to 127.0.0.1 (Loopback)"
+                    route add ${ipserver} gw 127.0.0.1 &>/dev/null
+                fi
+            else
+                echo -e " ${ipserver} routed on ${gateway}"
+                if [[ $(ip route | grep -wce "${ipserver}" | grep -wc "127.0.0.1") -ne 0 ]]; then
+                    if [[ "$(ping -q -w 1 -c 1 ${gateway} > /dev/null && echo ok || echo error)" == "ok" ]]; then
+                        echo -e " Re-route ${ipserver} to ${gateway}"
+                        route del ${ipserver} gw 127.0.0.1 &>/dev/null
+                        route add ${ipserver} gw ${gateway} &>/dev/null
+                    fi
+                fi
+            fi
+        done
+        sleep ${watchdog_delay}
+    done
+}
+
+start(){
+    # Boot Delay
+    echo -e "Delay ${boot_delay} secs"
+    sleep ${boot_delay}
+    
+    # Set Route
+    cat ${dir_root}/${name_config} | yq -r '.proxies[] | [.server, .gateway] | @csv' | while read route_obj; do
+        ipserver="$(echo -e "${route_obj}" | cut -d ',' -f 1)"
+        gateway="$(echo -e "${route_obj}" | cut -d ',' -f 2)"
+        if [[ "$(check_gw ${gateway})" == "ok" ]]; then
+            echo -e "Route ${ipserver} via ${gateway}"
+            route add ${ipserver} gw ${gateway} &>/dev/null
+            echo -e "online" > /tmp/clash_gateway
+        else
+            echo -e "Gateway ${gateway} is offline"
+            echo -e "offline" > /tmp/clash_gateway
+            exit 1
+        fi
+    done
+
+    # Run Clash
+    screen -dmS saclash ${clash_core} -d ${dir_root}
+    
+    # Run Watchdog
+    export dir_root
+    export name_config
+    export clash_core
+    export watchdog_delay
+    export -f saclash_watchdog
+    screen -dmS saclash_watchdog bash -c "saclash_watchdog"
+}
+
+stop(){
+    echo -e "Deleting Previous route"
+    cat ${dir_root}/${name_config} | yq -r '.proxies[] | [.server, .gateway] | @csv' | while read route_obj; do
+        ipserver="$(echo -e "${route_obj}" | cut -d ',' -f 1)"
+        gateway="$(echo -e "${route_obj}" | cut -d ',' -f 2)"
+        route del ${ipserver} gw ${gateway} &>/dev/null
+    done
+    echo -e "Stopping Clash"
+    if [[ ! "$(pidof ${clash_core})" == '' ]]; then
+        kill $(pidof ${clash_core})
+    fi
+    echo -e "Stopping Clash Watchdog"
+    kill $(screen -ls | grep -oE "[0-9]+\.saclash_watchdog\t" | sed -e "s/\..*$//g")
+    echo -e "Clash Stopped"
+}
