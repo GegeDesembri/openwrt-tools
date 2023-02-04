@@ -61,6 +61,6 @@ Tambahkan baris berikut di `/etc/rc.local` di atas `exit 0`
 
 ## Configuration Docs
 
-Ada beberapa ketentu konfigurasi Clash yang harus disesuaikan.
+Ada beberapa ketentuan konfigurasi Clash yang harus disesuaikan.
 - Tambahkan key `gateway` dengan value berisi alamat Gateway Modem Hilink
 - Key `server` harus berupa IP Address bukan domain
