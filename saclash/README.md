@@ -78,7 +78,8 @@ Tambahkan baris berikut di `/etc/rc.local` di atas `exit 0`
 
 ## Configuration Docs
 
-Ada beberapa ketentuan konfigurasi Clash yang harus disesuaikan.
+Ada beberapa ketentuan konfigurasi Clash yang harus disesuaikan. Lihat contoh konfigurasi pada file `config.yaml`.
 - Tambahkan key `gateway` pada setiap proxy dengan value berisi alamat Gateway Modem Hilink
 - Key `server` harus berupa IP Address bukan domain
-- Lihat contoh konfigurasi pada file `example.yaml`
+- File konfigurasi harus berapa di `/etc/gegevps/saclash/config.yaml`
+
