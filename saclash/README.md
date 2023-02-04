@@ -72,7 +72,7 @@ Semoga membantu.
 
 ### 5. Start on boot
 
-Tambahkan baris berada di `/etc/rc.local` di atas `exit 0`
+Tambahkan baris di bawah ini di `/etc/rc.local` di atas `exit 0`
   
     /etc/init.d/saclash start
 
@@ -81,5 +81,5 @@ Tambahkan baris berada di `/etc/rc.local` di atas `exit 0`
 Ada beberapa ketentuan konfigurasi Clash yang harus disesuaikan. Lihat contoh konfigurasi pada file `config.yaml`.
 - Tambahkan key `gateway` pada setiap proxy dengan value berisi alamat Gateway Modem Hilink
 - Key `server` harus berupa IP Address bukan domain
-- File konfigurasi harus berapa di `/etc/gegevps/saclash/config.yaml`
+- File konfigurasi harus berada di `/etc/gegevps/saclash/config.yaml`
 
