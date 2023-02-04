@@ -45,7 +45,8 @@ proxies:
     port: 443
     type: vmess
     uuid: 524d3d96-9d82-11ed-a688-06df80egdfgdf
-    sni: my.gegevps.com, alterId: 0
+    sni: my.gegevps.com
+    alterId: 0
     cipher: auto
     tls: true
     skip-cert-verify: true
