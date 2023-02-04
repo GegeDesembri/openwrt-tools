@@ -59,4 +59,8 @@ Tambahkan baris berikut di `/etc/rc.local` di atas `exit 0`
   
     /etc/init.d/saclash start
 
-## Clash Manual Config Guide
+## Configuration Docs
+
+Ada beberapa ketentu konfigurasi Clash yang harus disesuaikan.
+- Tambahkan key `gateway` dengan value berisi alamat Gateway Modem Hilink
+- Key `server` harus berupa IP Address bukan domain
