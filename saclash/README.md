@@ -30,7 +30,7 @@ Semoga membantu.
     Software version: 21.333.01.00.00
     Web UI version:	17.100.18.03.143-Mod1.21
 
-    Nama perangkat:	E8372
+    Nama perangkat:	E8372H-153
     Versi perangkat keras: CL1E8372HM
     Versi perangkat lunak: 21.333.64.00.1456
     Versi WEBUI: 17.100.20.09.1456
