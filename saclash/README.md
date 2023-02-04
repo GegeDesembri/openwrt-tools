@@ -78,6 +78,20 @@ Tambahkan baris di bawah ini di `/etc/rc.local` di atas `exit 0`
   
     /etc/init.d/saclash start
 
+## SAClash Service
+
+Start SAClash
+
+    /etc/init.d/saclash start
+
+Stop SAClash
+
+    /etc/init.d/saclash stop
+    
+Restart SAClash
+
+    /etc/init.d/saclash restart
+
 ## Configuration Docs
 
 Ada beberapa ketentuan konfigurasi Clash yang harus disesuaikan. Lihat contoh konfigurasi pada file [config.yaml](https://github.com/GegeDesembri/openwrt-tools/blob/master/saclash/config.yaml).
