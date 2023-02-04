@@ -59,6 +59,4 @@ Tambahkan baris berikut di `/etc/rc.local` di atas `exit 0`
   
     /etc/init.d/saclash start
 
-
-  
-  
+## Clash Manual Config Guide
