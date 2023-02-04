@@ -40,13 +40,20 @@ Semoga membantu.
 ### 1. Install Prerequisite
 
     opkg update
-    opkg install gzip bash screen yq wget curl nano
+    opkg install zip unzip gzip bash screen yq wget curl nano
 
 ### 2. Install Clash Premium
 
     wget -qO /usr/bin/clash.gz "https://github.com/Dreamacro/clash/releases/download/premium/clash-linux-arm64-2023.01.29.gz"
     gunzip /usr/bin/clash.gz
     chmod +x /usr/bin/clash
+    
+### 3. Install User Interface (Source: OpenClash)
+
+    mkdir -p /etc/gegevps/saclash
+    wget -qO /etc/gegevps/saclash/ui.zip "https://github.com/GegeDesembri/openwrt-tools/raw/master/saclash/ui.zip"
+    unzip /etc/gegevps/saclash/ui.zip -d /etc/gegevps/saclash
+    rm -rf /etc/gegevps/saclash/ui.zip
 
 ### 3. Install SAClash
   
