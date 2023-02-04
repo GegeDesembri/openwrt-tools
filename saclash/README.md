@@ -37,6 +37,7 @@ Semoga membantu.
 
 ## SAClash Overview
 
+- IP Gateway setiap modem harus berbeda
 - Started delay 60 seocnds after Device Boot
 - SAClash Auto Route Watchdog every 1 second
 - YACD: `http://<IP_OPENWRT>:9090/ui/yacd/?hostname=<IP_OPENWRT>&port=9090&secret=123456`
