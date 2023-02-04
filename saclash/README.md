@@ -72,7 +72,7 @@ Semoga membantu.
 
 ### 5. Start on boot
 
-Tambahkan baris berikut di `/etc/rc.local` di atas `exit 0`
+Tambahkan baris berada di `/etc/rc.local` di atas `exit 0`
   
     /etc/init.d/saclash start
 
