@@ -54,13 +54,13 @@ Semoga membantu.
     opkg update
     opkg install zip unzip gzip bash screen yq wget curl nano
 
-### 2. Install Clash Premium
+### 2. Install [Clash Premium](https://github.com/Dreamacro/clash/releases/tag/premium)
 
     wget -qO /usr/bin/clash.gz "https://github.com/Dreamacro/clash/releases/download/premium/clash-linux-arm64-2023.01.29.gz"
     gunzip /usr/bin/clash.gz
     chmod +x /usr/bin/clash
     
-### 3. Install WebUI (Source: OpenClash)
+### 3. Install WebUI (Source: [OpenClash](https://github.com/vernesong/OpenClash))
 
     mkdir -p /etc/gegevps/saclash
     wget -qO /etc/gegevps/saclash/ui.zip "https://github.com/GegeDesembri/openwrt-tools/raw/master/saclash/ui.zip"
