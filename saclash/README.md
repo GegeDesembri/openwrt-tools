@@ -48,19 +48,19 @@ Semoga membantu.
     gunzip /usr/bin/clash.gz
     chmod +x /usr/bin/clash
     
-### 3. Install User Interface (Source: OpenClash)
+### 3. Install WebUI (Source: OpenClash)
 
     mkdir -p /etc/gegevps/saclash
     wget -qO /etc/gegevps/saclash/ui.zip "https://github.com/GegeDesembri/openwrt-tools/raw/master/saclash/ui.zip"
     unzip /etc/gegevps/saclash/ui.zip -d /etc/gegevps/saclash
     rm -rf /etc/gegevps/saclash/ui.zip
 
-### 3. Install SAClash
+### 4. Install SAClash
   
     wget -qO /etc/init.d/saclash "https://github.com/GegeDesembri/openwrt-tools/raw/master/saclash/saclash"
     chmod +x /etc/init.d/saclash
 
-### 4. Start on boot
+### 5. Start on boot
 
 Tambahkan baris berikut di `/etc/rc.local` di atas `exit 0`
   
