@@ -49,30 +49,30 @@ Semoga membantu.
 - Disable OpenClash
 - Uncheck `Use default gateway` pada setiap hilink interface [*Interfaces* > *HILINK* > *Edit* > *Adavanced Settings* > *uncheck `Use default gateway`* > *Save*]
 
-### 1. Install Prerequisite
+### 2. Install Prerequisite
 
     opkg update
     opkg install zip unzip gzip bash screen yq wget curl nano
 
-### 2. Install [Clash Premium](https://github.com/Dreamacro/clash/releases/tag/premium)
+### 3. Install [Clash Premium](https://github.com/Dreamacro/clash/releases/tag/premium)
 
     wget -qO /usr/bin/clash.gz "https://github.com/Dreamacro/clash/releases/download/premium/clash-linux-arm64-2023.01.29.gz"
     gunzip /usr/bin/clash.gz
     chmod +x /usr/bin/clash
     
-### 3. Install WebUI (Source: [OpenClash](https://github.com/vernesong/OpenClash))
+### 4. Install WebUI (Source: [OpenClash](https://github.com/vernesong/OpenClash))
 
     mkdir -p /etc/gegevps/saclash
     wget -qO /etc/gegevps/saclash/ui.zip "https://github.com/GegeDesembri/openwrt-tools/raw/master/saclash/ui.zip"
     unzip /etc/gegevps/saclash/ui.zip -d /etc/gegevps/saclash
     rm -rf /etc/gegevps/saclash/ui.zip
 
-### 4. Install SAClash
+### 5. Install SAClash
   
     wget -qO /etc/init.d/saclash "https://github.com/GegeDesembri/openwrt-tools/raw/master/saclash/saclash"
     chmod +x /etc/init.d/saclash
 
-### 5. Start on boot
+### 6. Start on boot
 
 Tambahkan baris di bawah ini di `/etc/rc.local` di atas `exit 0`
   
