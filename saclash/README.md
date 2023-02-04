@@ -72,7 +72,13 @@ Semoga membantu.
     wget -qO /etc/init.d/saclash "https://github.com/GegeDesembri/openwrt-tools/raw/master/saclash/saclash"
     chmod +x /etc/init.d/saclash
 
-### 6. Start on boot
+### 6. Bash Command
+
+Edit baris pertama (`root`) pada `/etc/passwd` menjadi bash seperti dibawah ini
+  
+    root:x:0:0:root:/root:/bin/bash
+
+### 7. Start on boot
 
 Tambahkan baris di bawah ini di `/etc/rc.local` di atas `exit 0`
   
