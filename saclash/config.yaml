@@ -1,0 +1,73 @@
+redir-port: 7892
+mixed-port: 7890
+
+authentication:
+ - "myproxy:mysecret"
+
+allow-lan: true
+bind-address: '*'
+
+tun:
+    enable: true
+    stack: system
+    auto-route: true
+
+mode: rule
+
+log-level: info
+
+ipv6: true
+
+external-controller: 0.0.0.0:9090
+external-ui: ui
+secret: '123456'
+
+dns:
+  enable: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  default-nameserver:
+    - 1.1.1.1
+    - 1.0.0.1
+    - 8.8.8.8
+    - 8.8.4.4
+  nameserver:
+    - 1.1.1.1
+    - 1.0.0.1
+    - 8.8.8.8
+    - 8.8.4.4
+
+proxies:
+  # Contoh Proxy Rapi
+  - gateway: 192.168.60.1 # Gateway modem tujuan
+    name: xray-vmess-ws-tls-meprivate-ruangguru
+    server: 104.18.3.2 # Server harus berupa IP
+    port: 443
+    type: vmess
+    uuid: 524d3d96-9d82-11ed-a688-06df80egdfgdf
+    sni: my.gegevps.com, alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: true
+    udp: true
+    network: ws
+    ws-opts:
+        path: /YOURPATH/xray-vmess-ws-tls
+        headers:
+            Host: my.gegevps.com
+  # Contoh Proxy one-line
+  - {gateway: 192.168.62.1, name: xray-vmess-ws-tls-meprivate-byuspace, server: 162.159.138.78, port: 443, type: vmess, uuid: 524d3d96-9d82-11ed-a688-06df80egdfgdf, sni: my.gegevps.com, alterId: 0, cipher: auto, tls: true, skip-cert-verify: true, udp: true, network: ws, ws-opts: {path: /YOURPATH/xray-vmess-ws-tls, headers: {Host: my.gegevps.com}}}
+
+proxy-groups:
+  - name: Load Balance
+    type: load-balance
+    strategy: round-robin
+    disable-udp: false
+    proxies:
+      - xray-vmess-ws-tls-meprivate-byuspace
+      - xray-vmess-ws-tls-meprivate-ruangguru
+    url: 'http://www.gstatic.com/generate_204'
+    interval: 300
+
+rules:
+  - MATCH,Load Balance
