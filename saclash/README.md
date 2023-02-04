@@ -13,8 +13,8 @@ Semoga membantu.
 ## Devices
 
 - Raspberry Pi 4 Model B Rev 1.4
-- Huawei USB Modem E3372 (WebUI Mod)
-- Huawei USB Modem E8372h-153 (WebUI Huawei)
+- Huawei USB Modem E5577CS-603 (WebUI Mod)
+- Huawei USB Modem E8372H-153 (WebUI Huawei)
 
 ## Device Overview
 
@@ -24,6 +24,16 @@ Semoga membantu.
     Target Platform: bcm27xx/bcm2711
     Firmware Version: OpenWrt 22.03.3 r20028-43d71ad93e / LuCI openwrt-22.03 branch git-22.361.69894-438c598
     Kernel Version: 5.10.161
+    
+    Device name: E5577CS-603
+    Hardware version: CL3E5573SM06
+    Software version: 21.333.01.00.00
+    Web UI version:	17.100.18.03.143-Mod1.21
+    
+    Nama perangkat:	E8372
+    Versi perangkat keras: CL1E8372HM
+    Versi perangkat lunak: 21.333.64.00.1456
+    Versi WEBUI: 17.100.20.09.1456
 
 ## SAClash Overview
 
