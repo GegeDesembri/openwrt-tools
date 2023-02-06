@@ -106,3 +106,10 @@ Ada beberapa ketentuan konfigurasi Clash yang harus disesuaikan. Lihat contoh ko
 - Jangan lupa untuk menambakan IP Server Proxies pada DNS Fallback CIDR
 - File konfigurasi harus berada di `/etc/gegevps/saclash/config.yaml`
 
+## Changelogs
+
+**2023-02-06**
+- [FIX] Proxies tidak terhubung padahal gateway sudah sesuai
+- [FIX] Internet di dalam OpenWrt jalan tetapi tidak bisa digunakan melalui LAN
+- [FIX] Internet sudah terhubung melalui LAN (Windows) tetapi "not resolv domain"
+
