@@ -104,6 +104,7 @@ Restart SAClash
 Ada beberapa ketentuan konfigurasi Clash yang harus disesuaikan. Lihat contoh konfigurasi pada file [config.yaml](https://github.com/GegeDesembri/openwrt-tools/blob/master/saclash/config.yaml).
 - Tambahkan key `gateway` pada setiap proxy dengan value berisi alamat Gateway Modem Hilink
 - Key `server` harus berupa IP Address bukan domain
+- Setiap key `server` harus menggunakan IP yang berbeda
 - Jangan lupa untuk menambakan IP Server Proxies pada DNS Fallback CIDR
 - File konfigurasi harus berada di `/etc/gegevps/saclash/config.yaml`
 
