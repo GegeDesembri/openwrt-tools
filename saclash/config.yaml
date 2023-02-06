@@ -1,50 +1,42 @@
-redir-port: 7892
-mixed-port: 7890
-
-authentication:
- - "myproxy:mysecret"
-
-allow-lan: true
-bind-address: '*'
-
-tun:
-    enable: true
-    stack: system
-    auto-route: true
-
-mode: rule
-
-log-level: info
-
-ipv6: true
-
+# Dashboard Settings
 external-controller: 0.0.0.0:9090
 external-ui: ui
 secret: '123456'
+log-level: info
 
+# Interface Settings
+tun:
+  enable: true
+  stack: gvisor
+  dns-hijack:
+    - any:53
+  auto-route: true
+
+# DNS Settings
 dns:
   enable: true
   enhanced-mode: fake-ip
-  fake-ip-range: 198.18.0.1/16
-  default-nameserver:
-    - 1.1.1.1
-    - 1.0.0.1
-    - 8.8.8.8
-    - 8.8.4.4
   nameserver:
-    - 1.1.1.1
-    - 1.0.0.1
+    - 114.114.114.114
+    - 223.5.5.5
     - 8.8.8.8
-    - 8.8.4.4
+  fallback: []
+  fallback-filter:
+    ipcidr:
+      - 104.18.2.2/32
+      - 162.159.128.79/32
+
+# Tunnel Mode
+mode: rule
 
 proxies:
   # Contoh Proxy Rapi
   - gateway: 192.168.60.1 # Gateway modem tujuan
     name: xray-vmess-ws-tls-meprivate-ruangguru
-    server: 104.18.3.2 # Server harus berupa IP
+    server: 104.18.2.2 # Server harus berupa IP
     port: 443
     type: vmess
-    uuid: 524d3d96-9d82-11ed-a688-06df80egdfgdf
+    uuid: 524d3d96-9d82-11ed-4444-06df80e9c580
     sni: my.gegevps.com
     alterId: 0
     cipher: auto
@@ -57,7 +49,7 @@ proxies:
         headers:
             Host: my.gegevps.com
   # Contoh Proxy one-line
-  - {gateway: 192.168.62.1, name: xray-vmess-ws-tls-meprivate-byuspace, server: 162.159.138.78, port: 443, type: vmess, uuid: 524d3d96-9d82-11ed-a688-06df80egdfgdf, sni: my.gegevps.com, alterId: 0, cipher: auto, tls: true, skip-cert-verify: true, udp: true, network: ws, ws-opts: {path: /YOURPATH/xray-vmess-ws-tls, headers: {Host: my.gegevps.com}}}
+  - {gateway: 192.168.62.1, name: xray-vmess-ws-tls-meprivate-byuspace, server: 162.159.128.79, port: 443, type: vmess, uuid: 524d3d96-9d82-11ed-4444-06df80e9c580, sni: my.gegevps.com, alterId: 0, cipher: auto, tls: true, skip-cert-verify: true, udp: true, network: ws, ws-opts: {path: /YOURPATH/xray-vmess-ws-tls, headers: {Host: my.gegevps.com}}}
 
 proxy-groups:
   - name: Load Balance
