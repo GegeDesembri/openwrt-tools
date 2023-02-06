@@ -53,7 +53,8 @@ Semoga membantu.
 ### 2. Install Prerequisite
 
     opkg update
-    opkg install unzip gzip bash screen yq wget curl nano
+    opkg install unzip gzip bash screen yq wget curl nano kmod-tun ipset ip-full iptables-mod-tproxy \
+    iptables-mod-extra libcap libcap-bin ca-certificates coreutils-nohup coreutils
 
 ### 3. Install [Clash Premium](https://github.com/Dreamacro/clash/releases/tag/premium)
 
