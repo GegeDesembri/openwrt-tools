@@ -37,11 +37,11 @@ Semoga membantu.
 
 ## SAClash Overview
 
+- YACD: `http://<IP_OPENWRT>:9090/ui/yacd/?hostname=<IP_OPENWRT>&port=9090&secret=123456`
 - IP Gateway setiap modem harus berbeda
-- Started delay 60 seocnds after Device Boot
+- Started delay 30 seconds after Device Boot
 - SAClash Auto Route Watchdog every 1 second
 - SAClash akan otomatis re-route sesuai Gateway jika modem dicabut lalu dimasukkan kembali
-- YACD: `http://<IP_OPENWRT>:9090/ui/yacd/?hostname=<IP_OPENWRT>&port=9090&secret=123456`
 
 ## Install SAClash
 
@@ -83,7 +83,7 @@ Edit baris pertama (`root`) pada `/etc/passwd` menjadi bash seperti dibawah ini
 
 Tambahkan baris di bawah ini di `/etc/rc.local` di atas `exit 0`
   
-    /etc/init.d/saclash start
+    sleep 30 && /etc/init.d/saclash start
 
 ## SAClash Service
 
