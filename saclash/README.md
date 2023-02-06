@@ -53,7 +53,7 @@ Semoga membantu.
 ### 2. Install Prerequisite
 
     opkg update
-    opkg install zip unzip gzip bash screen yq wget curl nano
+    opkg install unzip gzip bash screen yq wget curl nano
 
 ### 3. Install [Clash Premium](https://github.com/Dreamacro/clash/releases/tag/premium)
 
