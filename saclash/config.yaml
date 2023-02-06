@@ -17,12 +17,17 @@ dns:
   enable: true
   enhanced-mode: fake-ip
   nameserver:
+    # China DNS
     - 114.114.114.114
     - 223.5.5.5
+    # Global DNS
+    - 1.1.1.1
     - 8.8.8.8
   fallback: []
   fallback-filter:
     ipcidr:
+      # Pengecualian IP Server Proxies dari interface utun
+      # Pastikan IP Server Proxies disertakan di dalam sini
       - 104.18.2.2/32
       - 162.159.128.79/32
 
