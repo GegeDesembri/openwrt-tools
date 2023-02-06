@@ -6,7 +6,7 @@ STOP=50
 dir_root="/etc/gegevps/saclash"
 name_config="config.yaml"
 clash_core="clash"
-boot_delay="60"
+boot_delay="3"
 watchdog_delay="1"
 mkdir -p ${dir_root}
 
@@ -20,25 +20,11 @@ function saclash_watchdog(){
             ipserver="$(echo -e "${route_obj}" | cut -d ',' -f 1)"
             gateway="$(echo -e "${route_obj}" | cut -d ',' -f 2)"
             
-            if [[ $(ip route | grep -we "${ipserver}" | sed "/127\.0\.0\.1/d" | wc -l) -eq 0 ]]; then
-                if [[ "$(ping -q -w 1 -c 1 ${gateway} > /dev/null && echo ok || echo error)" == "ok" ]]; then
-                    echo -e " Route ${ipserver} to ${gateway}"
-                    route del ${ipserver} gw 127.0.0.1 &>/dev/null
-                    route add ${ipserver} gw ${gateway} &>/dev/null
-                else
-                    # Note : Route loopback gak bisa karena ping checknya selalu ok ketika Clash sedangberjalan
-                    echo -e " Route ${ipserver} to 127.0.0.1 (Loopback)"
-                    route add ${ipserver} gw 127.0.0.1 &>/dev/null
-                fi
+            if [[ $(ip route | grep -wce "${ipserver}") -eq 0 ]]; then
+                echo -e "Re-routing ${ipserver} gateway ${gateway}"
+                route add ${ipserver} gw ${gateway} &>/dev/null
             else
-                echo -e " ${ipserver} routed on ${gateway}"
-                if [[ $(ip route | grep -wce "${ipserver}" | grep -wc "127.0.0.1") -ne 0 ]]; then
-                    if [[ "$(ping -q -w 1 -c 1 ${gateway} > /dev/null && echo ok || echo error)" == "ok" ]]; then
-                        echo -e " Re-route ${ipserver} to ${gateway}"
-                        route del ${ipserver} gw 127.0.0.1 &>/dev/null
-                        route add ${ipserver} gw ${gateway} &>/dev/null
-                    fi
-                fi
+                echo -e "${ipserver} gateway ${gateway} Already route"
             fi
         done
         sleep ${watchdog_delay}
