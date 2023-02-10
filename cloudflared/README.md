@@ -43,3 +43,7 @@ Setelah set Token kamu bisa enable dan start Cloudflared
 4. Pilih tab `Public Hostname`
 5. Klik `Add public Hostname`, Isi `Subdomain`, `Domain`, `Type`, dan `URL`
 6. Klik `Save hostname`
+
+## Referensi
+
+https://hmolina.dev/p/cloudflared-tunnel-in-openwrt/
