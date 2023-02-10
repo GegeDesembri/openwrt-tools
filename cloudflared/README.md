@@ -1,1 +1,1 @@
-# Cloudflared Tunnels
+# Cloudflared Tunnels (Zero Trust)
