@@ -5,3 +5,4 @@ Semua OpenWrt Tools disini akan dikembangkan menggunakan shebang `bash`. Jadi pa
 ## Index
 
 - [SAClash](https://github.com/GegeDesembri/openwrt-tools/tree/master/saclash) - Manual Routing for Many USB Hilink Modem
+- [Cloudflared](https://github.com/GegeDesembri/openwrt-tools/tree/master/cloudflared) - ZeroTier Alternative, true public access with domain
