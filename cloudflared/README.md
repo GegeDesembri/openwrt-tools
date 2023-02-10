@@ -27,6 +27,7 @@ Copy Teks yang begaris bawah merah seperti pada di gambar.
 ![Token yang digunakan adalah yang bergaris bawah merah](https://raw.githubusercontent.com/GegeDesembri/openwrt-tools/master/cloudflared/assets/token-example.png)
 
 Masukkan ke dalam configurasi Cloudflared
+
     nano /etc/init.d/cloudflared
 
 Ganti `your_token` dengan token yang sudah kamu miliki.
@@ -34,6 +35,7 @@ Ganti `your_token` dengan token yang sudah kamu miliki.
 ## Enable and Start
 
 Setelah set Token kamu bisa enable dan start Cloudflared
+
     /etc/init.d/cloudflared enable
     /etc/init.d/cloudflared start
 
