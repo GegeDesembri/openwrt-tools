@@ -6,9 +6,9 @@ Tools ini saya gunakan sebagai alternatif dari tools Zerotier untuk mengakses Lu
 
 ## Install Cloudflared
 
-opkg update && \
-opkg install bash jq curl wget && \
-wget -qO /root/cloudflared.sh "https://raw.githubusercontent.com/GegeDesembri/openwrt-tools/master/cloudflared/install.sh" && \
-chmod +x /root/cloudflared.sh && \
-/root/cloudflared.sh && \
-rm -rf /root/cloudflared.sh && \
+    opkg update && \
+    opkg install bash jq curl wget && \
+    wget -qO /root/cloudflared.sh "https://raw.githubusercontent.com/GegeDesembri/openwrt-tools/master/cloudflared/install.sh" && \
+    chmod +x /root/cloudflared.sh && \
+    /root/cloudflared.sh && \
+    rm -rf /root/cloudflared.sh
