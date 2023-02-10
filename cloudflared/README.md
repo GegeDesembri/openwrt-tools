@@ -28,3 +28,18 @@ Masukkan ke dalam configurasi Cloudflared
     nano /etc/init.d/cloudflared
 
 Ganti `your_token` dengan token yang sudah kamu miliki.
+
+## Enable and Start
+
+Setelah set Token kamu bisa enable dan start Cloudflared
+    /etc/init.d/cloudflared enable
+    /etc/init.d/cloudflared start
+
+## Membuat domain
+
+1. Pergi ke https://one.dash.cloudflare.com/
+2. `Access` > `Tunnels`
+3. Pilih tunnel yang terhubung ke OpenWrt, klik `Configure`
+4. Pilih tab `Public Hostname`
+5. Klik `Add public Hostname`, Isi `Subdomain`, `Domain`, `Type`, dan `URL`
+6. Klik `Save hostname`
