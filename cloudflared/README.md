@@ -4,6 +4,8 @@
 
 Tools ini saya gunakan sebagai alternatif dari tools Zerotier untuk mengakses LuCI dari luar jaringan lokal. Tool ini menggunakan layanan dari Cloudflare Zero Trust.
 
+Saya sudah menggunakan ini sejak lama tapi di sistem Linux Server supaya tidak perlu mengekspos port lokal untuk webserver. Kalau di OpenWrt baru sekarang terpikir untuk mencoba dan ternyata berhasil walau belum sempurna. Jika kalian tertarik silahkan kalian pelajari dokumentasi Cloudflare Zero Trust.
+
 ## Install Cloudflared
 
     opkg update && \
