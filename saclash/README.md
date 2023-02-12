@@ -54,7 +54,7 @@ Semoga membantu.
 ### 2. Install Prerequisite
 
     opkg update
-    opkg install unzip gzip bash screen yq wget curl nano kmod-tun ipset ip-full iptables-mod-tproxy \
+    opkg install unzip gzip bash screen yq wget curl sed nano kmod-tun ipset ip-full iptables-mod-tproxy \
     iptables-mod-extra libcap libcap-bin ca-certificates coreutils-nohup coreutils
 
 ### 3. Install [Clash Premium](https://github.com/Dreamacro/clash/releases/tag/premium)
@@ -75,11 +75,11 @@ Semoga membantu.
     wget -qO /etc/init.d/saclash "https://github.com/GegeDesembri/openwrt-tools/raw/master/saclash/saclash"
     chmod +x /etc/init.d/saclash
 
-### 6. Bash Command
+### 6. Default Shell Bash
 
-Edit baris pertama (`root`) pada `/etc/passwd` menjadi bash seperti dibawah ini
+Ganti shell default untuk user `root` ke shell `bash`
   
-    root:x:0:0:root:/root:/bin/bash
+    sed -i "1 s|/ash$|/bash|g" /etc/passwd
 
 ### 7. Start on boot
 
