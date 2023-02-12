@@ -80,12 +80,6 @@ Ganti shell default untuk user `root` ke shell `bash`
   
     sed -i "1 s|/ash$|/bash|g" /etc/passwd
 
-### 7. Start on boot
-
-Tambahkan baris di bawah ini di `/etc/rc.local` di atas `exit 0`
-  
-    sleep 30 && /etc/init.d/saclash start
-
 ## SAClash Service
 
 Start SAClash
