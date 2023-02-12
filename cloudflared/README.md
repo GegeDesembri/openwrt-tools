@@ -23,7 +23,7 @@ Cloudflared Tunnels membutuhkan sebuah token Cloudflare Zero Trust supaya dapat 
 
 Silahkan ikuti petunjuk pada link dibawah.
 
-[Set up a tunnel through the dashboard](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/#set-up-a-tunnel-remotely-dashboard-setup)
+[Create a tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/#1-create-a-tunnel)
 
 Copy Teks yang begaris bawah merah seperti pada di gambar.
 ![Token yang digunakan adalah yang bergaris bawah merah](https://raw.githubusercontent.com/GegeDesembri/openwrt-tools/master/cloudflared/assets/token-example.png)
