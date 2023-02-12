@@ -25,7 +25,7 @@ Copy Teks yang begaris bawah merah seperti pada di gambar.
 ![Token yang digunakan adalah yang bergaris bawah merah](https://raw.githubusercontent.com/GegeDesembri/openwrt-tools/master/cloudflared/assets/token-example.png)
 
 ## Pemakaian
-1. Jalankan perintah `./root/cfdmgr i` untuk Install Cloudflared.
+1. Jalankan perintah `/root/cfdmgr i` untuk Install Cloudflared.
     
     > Pastikan untuk sudah menyimpan/menyalin token Cloudflare Zero Trust terlebih dahulu.
     
