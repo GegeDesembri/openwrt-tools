@@ -43,6 +43,8 @@ Setelah set Token kamu bisa enable dan start Cloudflared
 
 ## Membuat domain
 
+![Create Domain](https://raw.githubusercontent.com/GegeDesembri/openwrt-tools/master/cloudflared/assets/create-domain.png)
+
 1. Pergi ke https://one.dash.cloudflare.com/
 2. `Access` > `Tunnels`
 3. Pilih tunnel yang terhubung ke OpenWrt, klik `Configure`
