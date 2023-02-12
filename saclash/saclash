@@ -1,6 +1,6 @@
 #!/bin/bash /etc/rc.common
 
-START=19
+START=98
 STOP=50
 
 dir_root="/etc/gegevps/saclash"
@@ -24,7 +24,7 @@ function saclash_watchdog(){
                 echo -e "Re-routing ${ipserver} gateway ${gateway}"
                 route add ${ipserver} gw ${gateway} &>/dev/null
             else
-                echo -e "${ipserver} gateway ${gateway} Already route"
+                echo -e "${ipserver} gateway ${gateway} routed"
             fi
         done
         sleep ${watchdog_delay}
@@ -53,6 +53,7 @@ start(){
 
     # Run Clash
     screen -dmS saclash ${clash_core} -d ${dir_root}
+    sleep 3
     
     # Run Watchdog
     export dir_root
