@@ -31,11 +31,11 @@ Copy Teks yang begaris bawah merah seperti pada di gambar.
     
 2. Beberapa perintah yang tersedia
 
-   - `./root/cfdmgr i` : Install Cloudflared
-   - `./root/cfdmgr e` : Edit Cloudflared token
-   - `./root/cfdmgr s` : Activate/Disable autostart
-   - `./root/cfdmgr u` : Update Cloudflared binary
-   - `./root/cfdmgr r` : Uninstall Cloudflared
+   - `/root/cfdmgr i` : Install Cloudflared
+   - `/root/cfdmgr e` : Edit Cloudflared token
+   - `/root/cfdmgr s` : Activate/Disable autostart
+   - `/root/cfdmgr u` : Update Cloudflared binary
+   - `/root/cfdmgr r` : Uninstall Cloudflared
 
 ## Membuat domain
 
