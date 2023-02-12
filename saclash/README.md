@@ -47,6 +47,7 @@ Semoga membantu.
 
 ### 1. Prepare
 
+- Pastikan tanggal dan jam perangkat aktual
 - Disable OpenClash
 - Uncheck `Use default gateway` pada setiap hilink interface [*Interfaces* > *HILINK* > *Edit* > *Advanced Settings* > *uncheck `Use default gateway`* > *Save*] <*Bisa disable setelah instalasi karena membutuhkan internet untuk install*>
 
