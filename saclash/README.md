@@ -93,6 +93,14 @@ Stop SAClash
 Restart SAClash
 
     /etc/init.d/saclash restart
+    
+Enable SAClash on boot
+
+    /etc/init.d/saclash enable
+    
+Disable SAClash on boot
+
+    /etc/init.d/saclash disable
 
 ## Configuration Docs
 
