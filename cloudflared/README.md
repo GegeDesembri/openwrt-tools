@@ -10,7 +10,7 @@ Saya sudah menggunakan ini sejak lama tapi di sistem Linux Server supaya tidak p
 
 ## Download Cloudflared Script Manager
 
-    wget -qO /root/cfdmgr "https://raw.githubusercontent.com/GegeDesembri/openwrt-tools/master/cloudflared/cfdmgr.sh" && \
+    wget -qO /root/cfdmgr "https://raw.githubusercontent.com/GegeDesembri/openwrt-tools/master/cloudflared/cfdmgr" && \
     chmod +x /root/cfdmgr
 
 ## Cloudflared Tunnels Token
