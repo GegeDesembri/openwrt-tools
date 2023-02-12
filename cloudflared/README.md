@@ -52,8 +52,6 @@ Setelah set Token kamu bisa enable dan start Cloudflared
 
 ## Referensi
 
-Setup : https://hmolina.dev/p/cloudflared-tunnel-in-openwrt/
-
-SSH Access : https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/use_cases/ssh/
-
+Setup : https://hmolina.dev/p/cloudflared-tunnel-in-openwrt/ </br>
+SSH Access : https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/use_cases/ssh/ </br>
 Samba Sharing : https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/use_cases/smb/
