@@ -2,16 +2,16 @@
 # Base install.sh by Gege Desembri <https://github.com/GegeDesembri/openwrt-tools>
 # Revamped installation and added various supported devices architectures (Arm, arm64, x86_generic, x86_64) by Helmi Amirudin <https://helmiau.com>
 
-cfgh="cloudflare/cloudflared"
-bincf="/usr/bin/cloudflared"
-initcf="/etc/init.d/cloudflared"
-scnm="$(basename "$0")"
+github_reponame="cloudflare/cloudflared"
+path_binary="/usr/bin/cloudflared"
+file_initd="/etc/init.d/cloudflared"
+script_name="$(basename "$0")"
 
 # Checking if packages installed
-chkIPK () {
-	unset lstPkg
-	lstPkg=$( opkg list-installed | grep -c "^bash -\|^jq -\|^wget -\|^wget-ssl -\|curl -\|curl-ssl -" )
-	if [[ $lstPkg -lt 4 ]]; then
+function check_prerequisite() {
+	unset list_pkg
+	list_pkg=$(opkg list-installed | grep -c "^bash \-\|^jq \-\|^wget \-\|^wget\-ssl \-\|^curl \-\|^curl\-ssl \-")
+	if [[ $list_pkg -lt 4 ]]; then
 		echo -e "All/some required packages is not installed correctly or something wrong...."
 		echo -e "Updating package repositories..."
 		opkg update
@@ -19,29 +19,20 @@ chkIPK () {
 }
 
 # Install package if not installed, leave install if already installed
-insIPK () {
-	if [[ $( opkg list-installed | grep -c "^$1 -" ) == "0" ]]; then opkg install "$1"; fi
+function install_prerequisite () {
+	if [[ $(opkg list-installed | grep -c "^$1 -") == "0" ]]; then opkg install "$1"; fi
 }
 
 # Download and install Cloudflared binaries
-insBIN () {
+function install_binary() {
 	# Github get latest version
-	cfVer=$(curl -s "https://api.github.com/repos/${cfgh}/releases/latest" | jq -r .tag_name)
+	latest_binary=$(curl -s "https://api.github.com/repos/${github_reponame}/releases/latest" | jq -r .tag_name)
 
 	# Get device architecture
-	odf="/etc/opkg/distfeed.conf"
-	if [[ -e /etc/config/openclash ]] && grep -q "openclash.config.core_version"; then
-		archie="$( uci -q get openclash.config.core_version )"
-	elif [[ -e $odf ]] && grep -q "arm_"; then
-		archie="linux-arm"
-	elif [[ -e $odf ]] && grep -q "aarch64_"; then
+	if [[ "$(uname -m)" == "aarch64" ]]; then
 		archie="linux-arm64"
-	#elif [[ -e $odf ]] && grep -q "xxxx"; then
-	#	archie="linux-armhf "
-	elif [[ -e $odf ]] && grep -q "x86_64"; then
+	elif [[ "$(uname -m)" == "x86_64" ]]; then
 		archie="linux-amd64"
-	elif [[ -e $odf ]] && grep -q "i386_"; then
-		archie="linux-386"
 	else
 		archie="unsupported"
 		echo -e "Your device is unsupported!. Exiting..."
@@ -50,28 +41,27 @@ insBIN () {
 
 	# Install Cloudflared
 	echo -e "Architecture detected: ${archie}"
-	wget -qO $bincf "https://github.com/${cfgh}/releases/download/${cfVer}/cloudflared-${archie}"
-	chmod +x $bincf
+	wget -qO ${path_binary} "https://github.com/${github_reponame}/releases/download/${latest_binary}/cloudflared-${archie}"
+	chmod +x ${path_binary}
 
 	# Install init.d
-	wget -qO $initcf "https://raw.githubusercontent.com/GegeDesembri/openwrt-tools/master/cloudflared/cloudflared"
-	chmod +x $initcf
+	wget -qO ${file_initd} "https://raw.githubusercontent.com/GegeDesembri/openwrt-tools/master/cloudflared/cloudflared"
+	chmod +x ${file_initd}
 }
 
 # Token changer
-tknDT () {
+function token_update() {
 	# Get old data 
-	if [[ -e ${initcf} ]]; then
-		unset tkn
-		tkn=$(grep cfd_token ${initcf} | sed 's/.*cfd_token=//')
+	if [[ -e ${file_initd} ]]; then
+		unset current_token
+		current_token=$(grep "cfd_token=" ${file_initd} | sed 's/.*cfd_token=//')
 		
 		# Edit data
 		echo -e "Editing data..."
 		echo -e "💬 Enter New Cloudflared Token: (leave empty if no change)"
-		echo -n "==>> "
-		read -r newtkn
-		if [[ -n $newtkn ]]; then
-			sed -i "s#$tkn#$newtkn#g" $initcf
+        read -e -p "==>> " new_token
+		if [[ $(echo -e "${new_token}" | awk '{print length}') -ne 0 ]]; then
+			sed -i "s|${current_token}|${new_token}|g" ${file_initd}
 			# Success notif
 			echo -e "✔️ Cloudflared data updated successfully."
 		else
@@ -79,81 +69,78 @@ tknDT () {
 			echo -e "✔️ Cloudflared data is not updated."
 		fi
 	else
-		echo -e "File ${initcf} not available."
+		echo -e "File ${file_initd} not available."
 	fi
 }
 
 # Enable/disable Cloudflared autostart
-autoST () {
-	if [[ $(grep cfd_token ${initcf} | awk '{print length}') -gt 25 ]]; then
+function init_toggler() {
+	if [[ $(grep "cfd_token=" ${file_initd} | awk '{print length}') -gt 25 ]]; then
 		# Enable Cloudflared
-		$initcf enable
-		$initcf start
-		sed -i "s#$tkn#$newtkn#g" $initcf
-		# Success notif
-		echo -e "✔️ Cloudflared token set. Autostart activated."
+		${file_initd} enable
+		${file_initd} start
+		${file_initd} restart
+		echo -e "✔️ Cloudflared Autostart activated."
 	else
-		# Enable Cloudflared
-		$initcf disabled
-		$initcf stop
-		# No change notif
-		echo -e "✔️ Cloudflared data is not set. Autostart disabled."
+		# Disable Cloudflared
+		${file_initd} disable
+		${file_initd} stop
+		echo -e "✔️ Cloudflared Autostart disabled."
 	fi
 }
 
 # Uninstall Cloudflared
-uninsBIN () {
-	$initcf disabled
-	$initcf stop
-	[ -f $initcf ] && rm -f $initcf
-	[ -f $bincf ] && rm -f $bincf
+function uninstall_cloudflared() {
+	${file_initd} disable
+	${file_initd} stop
+	[ -f ${file_initd} ] && rm -f ${file_initd}
+	[ -f ${path_binary} ] && rm -f ${path_binary}
 	echo -e "✔️ Cloudflared uninstalled successfully!."
 }
 
 # Optional commands
 if [[ $1 == "i" ]]; then
-	# Installation cmds
-	chkIPK
-	insIPK bash
-	insIPK jq
-	if [[ $( opkg list | grep -c "wget-ssl -" ) -gt "1" ]]; then
-		insIPK wget-ssl
+	# Installation Prerequisite
+	check_prerequisite
+	install_prerequisite bash
+	install_prerequisite jq
+	if [[ $(opkg list | grep -c "wget-ssl -") -gt "1" ]]; then
+		install_prerequisite wget-ssl
 	else
-		insIPK wget
+		install_prerequisite wget
 	fi
-	insIPK curl
-	chkIPK
+	install_prerequisite curl
+	check_prerequisite
 
 	# Install binaries
-	insBIN
+	install_binary
 
 	# Change token
-	tknDT
+	token_update
 
 	# Enable Cloudflared autostart
-	autoCF
-
+	init_toggler
 elif [[ $1 == "e" ]]; then
-	tknDT
-	autoCF
+	token_update
+	init_toggler
 elif [[ $1 == "s" ]]; then
 	# Enable/disable auto start
-	autoCF
+	init_toggler
 elif [[ $1 == "u" ]]; then
 	# Disable runs
-	autoCF
+	init_toggler
 	# Install binaries
-	insBIN
+	init_toggler
 	# Enable runs
-	autoCF
+	init_toggler
 elif [[ $1 == "r" ]]; then
 	# Uninstall full
-	uninsBIN
+	uninstall_cloudflared
 else
 	echo -e "Cloudflared Script Usage:"
-	echo -e "$scnm i : Install Cloudflared"
-	echo -e "$scnm e : Edit Cloudflared token"
-	echo -e "$scnm s : Activate/Disable autostart"
-	echo -e "$scnm u : Update Cloudflared binary"
-	echo -e "$scnm r : Uninstall Cloudflared"
+	echo -e "${script_name} i : Install Cloudflared"
+	echo -e "${script_name} e : Edit Cloudflared token"
+	echo -e "${script_name} s : Activate/Disable autostart"
+	echo -e "${script_name} u : Update Cloudflared binary"
+	echo -e "${script_name} r : Uninstall Cloudflared"
 fi
