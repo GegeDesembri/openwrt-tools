@@ -63,10 +63,10 @@ function token_update() {
 		if [[ $(echo -e "${new_token}" | awk '{print length}') -ne 0 ]]; then
 			sed -i "s|${current_token}|${new_token}|g" ${file_initd}
 			# Success notif
-			echo -e "✔️ Cloudflared data updated successfully."
+			echo -e "✔ Cloudflared data updated successfully."
 		else
 			# No change notif
-			echo -e "✔️ Cloudflared data is not updated."
+			echo -e "✔ Cloudflared data is not updated."
 		fi
 	else
 		echo -e "File ${file_initd} not available."
@@ -82,12 +82,12 @@ function init_toggler() {
 		# Enable Cloudflared
 		${file_initd} enable
 		${file_initd} start
-		echo -e "✔️ Cloudflared Autostart activated."
+		echo -e "✔ Cloudflared Autostart activated."
 	else
 		# Disable Cloudflared
 		${file_initd} disable
 		${file_initd} stop
-		echo -e "✔️ Cloudflared Autostart disabled."
+		echo -e "✔ Cloudflared Autostart disabled."
 	fi
 }
 
@@ -97,7 +97,7 @@ function uninstall_cloudflared() {
 	${file_initd} stop
 	[ -f ${file_initd} ] && rm -f ${file_initd}
 	[ -f ${path_binary} ] && rm -f ${path_binary}
-	echo -e "✔️ Cloudflared uninstalled successfully!."
+	echo -e "✔ Cloudflared uninstalled successfully!."
 }
 
 # Optional commands
