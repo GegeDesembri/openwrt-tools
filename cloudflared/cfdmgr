@@ -76,10 +76,12 @@ function token_update() {
 # Enable/disable Cloudflared autostart
 function init_toggler() {
 	if [[ $(grep "cfd_token=" ${file_initd} | awk '{print length}') -gt 25 ]]; then
+		# Disable Cloudflared
+		${file_initd} disable
+		${file_initd} stop
 		# Enable Cloudflared
 		${file_initd} enable
 		${file_initd} start
-		${file_initd} restart
 		echo -e "✔️ Cloudflared Autostart activated."
 	else
 		# Disable Cloudflared
