@@ -33,6 +33,12 @@ function install_binary() {
 		archie="linux-arm64"
 	elif [[ "$(uname -m)" == "x86_64" ]]; then
 		archie="linux-amd64"
+	elif [[ "$(uname -m)" == "i386" ]]; then
+		archie="linux-386"
+	elif [[ "$(uname -m)" == "armhf" ]]; then
+		archie="linux-armhf"
+	elif [[ "$(uname -m)" == *"arm"* ]]; then
+		archie="linux-arm"
 	else
 		archie="unsupported"
 		echo -e "Your device is unsupported!. Exiting..."
