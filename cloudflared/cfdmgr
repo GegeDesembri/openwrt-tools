@@ -10,8 +10,8 @@ script_name="$(basename "$0")"
 # Checking if packages installed
 function check_prerequisite() {
 	unset list_pkg
-	list_pkg=$(opkg list-installed | grep -c "^bash \-\|^jq \-\|^wget \-\|^wget\-ssl \-\|^curl \-\|^curl\-ssl \-")
-	if [[ $list_pkg -lt 4 ]]; then
+	list_pkg=$(opkg list-installed | grep -c "^bash \-\|^screen \-\|^jq \-\|^wget \-\|^wget\-ssl \-\|^curl \-\|^curl\-ssl \-")
+	if [[ ${list_pkg} -lt 3 ]]; then
 		echo -e "All/some required packages is not installed correctly or something wrong...."
 		echo -e "Updating package repositories..."
 		opkg update
@@ -105,6 +105,7 @@ if [[ $1 == "i" ]]; then
 	# Installation Prerequisite
 	check_prerequisite
 	install_prerequisite bash
+	install_prerequisite screen
 	install_prerequisite jq
 	if [[ $(opkg list | grep -c "wget-ssl -") -gt "1" ]]; then
 		install_prerequisite wget-ssl
