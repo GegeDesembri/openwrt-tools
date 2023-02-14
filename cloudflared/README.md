@@ -40,7 +40,21 @@ Copy Teks yang begaris bawah merah seperti pada di gambar.
 
 ## Membuat domain
 
-**PERHATIAN!!!**</br>
+</br>
+
+**PERHATIAN!!!**
+
+</br>
+
+1. Buatlah domain apapun, di situs manapun.
+2. Pergi ke [Cloudflare Dashboard](https://dash.cloudflare.com) dan login, jika belum memiliki akun, silahkan mendaftar terlebih dahulu.
+3. Lihat tab **`Website`** dibagian kiri layar, lalu klik **`Add Site`**
+4. Cari domain yang sudah di daftarkan di langkah pertama (tunggu agak lama sampai terdeteksi).
+5. Pada **`Step (1) Select plan`** , pilih **`FREE Plan`** (ada di bawah sendiri).
+6. Pada **`Step (2) Review DNS Record`** bisa langsung scroll ke bawah untuk menekan tombol **`Continue`**.
+6. Pada **`Step (3) ganti nameserver`**  sesuai yang dikasih cloudflare, lalu klik tombol **`Check nameservers`**.
+8. Tidak perlu buat subdomain sendiri, karena subdomain untuk openwrt akan dibuat otomatis oleh sistem cloudflare ketika langkah ke-14 selesai.
+
 Domain yang akan dipakai WAJIB sudah dimasukkan ke dalam akun [Cloudflare](https://dash.cloudflare.com/). Hingga muncul dalam daftar seperti pada gambar berikut</br>
 ![Domain Ready](https://raw.githubusercontent.com/GegeDesembri/openwrt-tools/master/cloudflared/assets/domain-ready.png)
 
@@ -48,12 +62,12 @@ Jika sudah kamu bisa lanjut ke tahap berikutnya
 
 ![Create Domain](https://raw.githubusercontent.com/GegeDesembri/openwrt-tools/master/cloudflared/assets/create-domain.png)
 
-1. Pergi ke https://one.dash.cloudflare.com/
-2. `Access` > `Tunnels`
-3. Pilih tunnel yang terhubung ke OpenWrt, klik `Configure`
-4. Pilih tab `Public Hostname`
-5. Klik `Add public Hostname`, Isi `Subdomain`, `Domain`, `Type`, dan `URL`
-6. Klik `Save hostname`
+9. Pergi ke [Cloudflare ZeroTrust Dashboard](https://one.dash.cloudflare.com/)
+10. `Access` > `Tunnels`
+11. Pilih tunnel yang terhubung ke OpenWrt, klik `Configure`
+12. Pilih tab `Public Hostname`
+13. Klik `Add public Hostname`, Isi `Subdomain`, `Domain`, `Type`, dan `URL`
+14. Klik `Save hostname`
 
 ## Referensi
 
