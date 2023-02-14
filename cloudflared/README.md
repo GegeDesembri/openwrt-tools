@@ -40,7 +40,7 @@ Copy Teks yang begaris bawah merah seperti pada di gambar.
 
 ## Membuat domain
 
-**Perhatian!!!**</br>
+**PERHATIAN!!!**</br>
 Domain yang akan dipakai WAJIB sudah dimasukkan ke dalam akun [Cloudflare](https://dash.cloudflare.com/). Hingga muncul dalam daftar seperti pada gambar berikut</br>
 ![Domain Ready](https://raw.githubusercontent.com/GegeDesembri/openwrt-tools/master/cloudflared/assets/domain-ready.png)
 
