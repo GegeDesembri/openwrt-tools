@@ -25,6 +25,7 @@ Copy Teks yang begaris bawah merah seperti pada di gambar.
 ![Token yang digunakan adalah yang bergaris bawah merah](https://raw.githubusercontent.com/GegeDesembri/openwrt-tools/master/cloudflared/assets/token-example.png)
 
 ## Pemakaian
+
 1. Jalankan perintah `/root/cfdmgr i` untuk Install Cloudflared.
     
     > Pastikan untuk sudah menyimpan/menyalin token Cloudflare Zero Trust terlebih dahulu.
@@ -38,6 +39,12 @@ Copy Teks yang begaris bawah merah seperti pada di gambar.
    - `/root/cfdmgr r` : Uninstall Cloudflared
 
 ## Membuat domain
+
+**Perhatian!!!**</br>
+Domain yang akan dipakai WAJIB sudah dimasukkan ke dalam akun [Cloudflare](https://dash.cloudflare.com/). Hingga muncul dalam daftar seperti pada gambar berikut</br>
+![Domain Ready](https://raw.githubusercontent.com/GegeDesembri/openwrt-tools/master/cloudflared/assets/domain-ready.png)
+
+Jika sudah kamu bisa lanjut ke tahap berikutnya
 
 ![Create Domain](https://raw.githubusercontent.com/GegeDesembri/openwrt-tools/master/cloudflared/assets/create-domain.png)
 
