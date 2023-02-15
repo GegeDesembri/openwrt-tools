@@ -33,9 +33,9 @@ function install_binary() {
 		archie="linux-arm64"
 	elif [[ "$(uname -m)" == "x86_64" ]]; then
 		archie="linux-amd64"
-	elif [[ "$(uname -m)" == "i386" ]]; then
+	elif [[ "$(uname -m)" == *"i386"* ]]; then
 		archie="linux-386"
-	elif [[ "$(uname -m)" == "armhf" ]]; then
+	elif [[ "$(uname -m)" == *"armhf"* ]]; then
 		archie="linux-armhf"
 	elif [[ "$(uname -m)" == *"arm"* ]]; then
 		archie="linux-arm"
@@ -57,17 +57,16 @@ function install_binary() {
 
 # Token changer
 function token_update() {
-	# Get old data 
 	if [[ -e ${file_initd} ]]; then
-		unset current_token
-		current_token=$(grep "cfd_token=" ${file_initd} | sed 's/.*cfd_token=//')
-		
 		# Edit data
 		echo -e "Editing data..."
 		echo -e "💬 Enter New Cloudflared Token: (leave empty if no change)"
         read -e -p "==>> " new_token
-		if [[ $(echo -e "${new_token}" | awk '{print length}') -ne 0 ]]; then
-			sed -i "s|${current_token}|${new_token}|g" ${file_initd}
+		if [[ $(echo -e "${new_token}" | awk '{print length}') -gt 30 ]]; then
+			echo -e "${new_token}" > /tmp/temp_cf.token
+			mod_token=$(tr '\n' ' ' < /tmp/temp_cf.token | sed "s/.*--token //" | sed  "s/.*install //" )
+			sed -i "s|^cfd_token=.*$|cfd_token=${mod_token}|g" ${file_initd}
+			rm /tmp/temp_cf.token
 			# Success notif
 			echo -e "✔ Cloudflared data updated successfully."
 		else
@@ -81,7 +80,7 @@ function token_update() {
 
 # Enable/disable Cloudflared autostart
 function init_toggler() {
-	if [[ $(grep "cfd_token=" ${file_initd} | awk '{print length}') -gt 25 ]]; then
+	if [[ $(grep "cfd_token=" ${file_initd} | awk '{print length}') -gt 30 ]]; then
 		# Disable Cloudflared
 		${file_initd} disable
 		${file_initd} stop
@@ -106,7 +105,7 @@ function uninstall_cloudflared() {
 	echo -e "✔ Cloudflared uninstalled successfully!."
 }
 
-# Optional commands
+# Install commands
 if [[ $1 == "i" ]]; then
 	# Installation Prerequisite
 	check_prerequisite
@@ -142,14 +141,20 @@ elif [[ $1 == "u" ]]; then
 	init_toggler
 	# Enable runs
 	init_toggler
+elif [[ $1 == "l" ]]; then
+	# Read logs
+	ps | grep cloudflared
+	logread | grep cloudflared
 elif [[ $1 == "r" ]]; then
 	# Uninstall full
 	uninstall_cloudflared
 else
+	# Optional commands
 	echo -e "Cloudflared Script Usage:"
 	echo -e "${script_name} i : Install Cloudflared"
 	echo -e "${script_name} e : Edit Cloudflared token"
 	echo -e "${script_name} s : Activate/Disable autostart"
 	echo -e "${script_name} u : Update Cloudflared binary"
+	echo -e "${script_name} l : Read Cloudflared logs"
 	echo -e "${script_name} r : Uninstall Cloudflared"
 fi
