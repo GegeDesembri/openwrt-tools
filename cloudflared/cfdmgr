@@ -55,6 +55,37 @@ function install_binary() {
 	chmod +x ${file_initd}
 }
 
+# Update Cloudflared binary
+function update_binary() {
+	# Github get latest version
+	latest_binary=$(curl -s "https://api.github.com/repos/${github_reponame}/releases/latest" | jq -r .tag_name)
+
+	# Get device architecture
+	if [[ "$(uname -m)" == "aarch64" ]]; then
+		archie="linux-arm64"
+	elif [[ "$(uname -m)" == "x86_64" ]]; then
+		archie="linux-amd64"
+	elif [[ "$(uname -m)" == *"i386"* ]]; then
+		archie="linux-386"
+	elif [[ "$(uname -m)" == *"armhf"* ]]; then
+		archie="linux-armhf"
+	elif [[ "$(uname -m)" == *"arm"* ]]; then
+		archie="linux-arm"
+	else
+		archie="unsupported"
+		echo -e "Your device is unsupported!. Exiting..."
+		exit 1
+	fi
+
+	# Install Cloudflared
+	echo -e "Updating binary..."
+	echo -e "Architecture detected: ${archie}"
+	wget -qO ${path_binary}-update "https://github.com/${github_reponame}/releases/download/${latest_binary}/cloudflared-${archie}"
+	chmod +x ${path_binary}-update
+	rm -f ${path_binary}
+	mv ${path_binary}-update ${path_binary}
+}
+
 # Token changer
 function token_update() {
 	if [[ -e ${file_initd} ]]; then
@@ -80,7 +111,7 @@ function token_update() {
 
 # Enable/disable Cloudflared autostart
 function init_toggler() {
-	if [[ $(grep "cfd_token=" ${file_initd} | awk '{print length}') -gt 30 ]]; then
+	if [[ $(grep "cfd_token=" ${file_initd} | awk '{print length}') -gt 30 ]] && [[ $1 == "start" ]]; then
 		# Disable Cloudflared
 		${file_initd} disable
 		${file_initd} stop
@@ -88,11 +119,14 @@ function init_toggler() {
 		${file_initd} enable
 		${file_initd} start
 		echo -e "✔ Cloudflared Autostart activated."
-	else
+	elif [[ $(grep "cfd_token=" ${file_initd} | awk '{print length}') -gt 30 ]] && [[ $1 == "stop" ]]; then
 		# Disable Cloudflared
 		${file_initd} disable
 		${file_initd} stop
 		echo -e "✔ Cloudflared Autostart disabled."
+	else
+		# unknown command
+		echo -e "Unknown command."
 	fi
 }
 
@@ -127,20 +161,20 @@ if [[ $1 == "i" ]]; then
 	token_update
 
 	# Enable Cloudflared autostart
-	init_toggler
+	init_toggler start
 elif [[ $1 == "e" ]]; then
 	token_update
-	init_toggler
+	init_toggler start
 elif [[ $1 == "s" ]]; then
 	# Enable/disable auto start
-	init_toggler
+	init_toggler start
 elif [[ $1 == "u" ]]; then
 	# Disable runs
-	init_toggler
+	init_toggler stop
 	# Install binaries
-	init_toggler
+	update_binary
 	# Enable runs
-	init_toggler
+	init_toggler start
 elif [[ $1 == "l" ]]; then
 	# Read logs
 	ps | grep cloudflared
