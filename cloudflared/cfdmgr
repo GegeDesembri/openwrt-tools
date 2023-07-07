@@ -19,14 +19,31 @@ function check_prerequisite() {
 }
 
 # Install package if not installed, leave install if already installed
-function install_prerequisite () {
+function install_prerequisite() {
 	if [[ $(opkg list-installed | grep -c "^$1 -") == "0" ]]; then opkg install "$1"; fi
+}
+
+function compare_versions() {
+	[[ "$(echo "$1"$'\n'"$v2" | sort -V | head -n1)" == "$v1" ]]
 }
 
 # Download and install Cloudflared binaries
 function install_binary() {
 	# Github get latest version
 	latest_binary=$(curl -s "https://api.github.com/repos/${github_reponame}/releases/latest" | jq -r .tag_name)
+
+	# compare version before installing
+	if [[ -e $path_binary ]]; then
+		current_binary=$($path_binary --version | sed -n 's/.*version \([0-9.]\+\).*/\1/p')
+
+		compare_versions $current_binary $latest_binary
+		if [[ $? -eq 0 ]]; then
+			echo -e "Latest Cloudflared version is already installed."
+			exit 1
+		else
+			echo -e "Newest Cloudflared version ${latest_binary} is available."
+		fi
+	fi
 
 	# Get device architecture
 	if [[ "$(uname -m)" == "aarch64" ]]; then
@@ -47,11 +64,17 @@ function install_binary() {
 
 	# Install Cloudflared
 	echo -e "Architecture detected: ${archie}"
-	wget -qO ${path_binary} "https://github.com/${github_reponame}/releases/download/${latest_binary}/cloudflared-${archie}"
+	wget -qO ${path_binary} --show-progress "https://github.com/${github_reponame}/releases/download/${latest_binary}/cloudflared-${archie}"
 	chmod +x ${path_binary}
 
+	# Check init.d existing
+	if [[ -e ${file_initd} ]]; then
+		echo -e "Cloudflared ini.d is already installed."
+		exit 1
+	fi
+
 	# Install init.d
-	wget -qO ${file_initd} "https://raw.githubusercontent.com/GegeDesembri/openwrt-tools/master/cloudflared/cloudflared"
+	wget -qO ${file_initd} --show-progress "https://raw.githubusercontent.com/GegeDesembri/openwrt-tools/master/cloudflared/cloudflared"
 	chmod +x ${file_initd}
 }
 
@@ -59,6 +82,19 @@ function install_binary() {
 function update_binary() {
 	# Github get latest version
 	latest_binary=$(curl -s "https://api.github.com/repos/${github_reponame}/releases/latest" | jq -r .tag_name)
+
+	# compare version before updating
+	if [[ -e $path_binary ]]; then
+		current_binary=$($path_binary --version | sed -n 's/.*version \([0-9.]\+\).*/\1/p')
+
+		compare_versions $current_binary $latest_binary
+		if [[ $? -eq 0 ]]; then
+			echo -e "Latest Cloudflared version is already installed."
+			exit 1
+		else
+			echo -e "Newest Cloudflared version ${latest_binary} is available."
+		fi
+	fi
 
 	# Get device architecture
 	if [[ "$(uname -m)" == "aarch64" ]]; then
@@ -80,7 +116,7 @@ function update_binary() {
 	# Install Cloudflared
 	echo -e "Updating binary..."
 	echo -e "Architecture detected: ${archie}"
-	wget -qO ${path_binary}-update "https://github.com/${github_reponame}/releases/download/${latest_binary}/cloudflared-${archie}"
+	wget -qO ${path_binary}-update --show-progress "https://github.com/${github_reponame}/releases/download/${latest_binary}/cloudflared-${archie}"
 	chmod +x ${path_binary}-update
 	rm -f ${path_binary}
 	mv ${path_binary}-update ${path_binary}
@@ -92,10 +128,10 @@ function token_update() {
 		# Edit data
 		echo -e "Editing data..."
 		echo -e "💬 Enter New Cloudflared Token: (leave empty if no change)"
-        read -e -p "==>> " new_token
+		read -e -p "==>> " new_token
 		if [[ $(echo -e "${new_token}" | awk '{print length}') -gt 30 ]]; then
-			echo -e "${new_token}" > /tmp/temp_cf.token
-			mod_token=$(tr '\n' ' ' < /tmp/temp_cf.token | sed "s/.*--token //" | sed  "s/.*install //" )
+			echo -e "${new_token}" >/tmp/temp_cf.token
+			mod_token=$(tr '\n' ' ' </tmp/temp_cf.token | sed "s/.*--token //" | sed "s/.*install //")
 			sed -i "s|^cfd_token=.*$|cfd_token=${mod_token}|g" ${file_initd}
 			rm /tmp/temp_cf.token
 			# Success notif
